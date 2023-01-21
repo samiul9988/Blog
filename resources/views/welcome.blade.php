@@ -25,7 +25,7 @@
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
+                        <a href="{{ url('/members') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
@@ -124,6 +124,44 @@
 
                     <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
                         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>User Id</th>
+                                        <th>User Name</th>
+                                        <th>User Email</th>
+                                        <th>User Post Id</th>
+                                        <th>User Id</th>
+                                        <th>Post Comments</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($users as $user)
+                                    <tr>
+                                        <td>{{ $user->id }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->post_id }}</td>
+                                        <td>{{ $user->user_id }}</td>
+                                        <td>
+                                            {{-- {{ dd($post->comments) }} --}}
+                                        {{-- @foreach ($post->comments as $comment)
+                                        {{ $comment->message }}
+                                        @endforeach
+                                        </td> --}}
+
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

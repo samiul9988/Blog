@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\Destination;
+use App\Models\Flight;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -129,5 +131,42 @@ class MemberController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function retriving(){
+        // $member = Member::all();
+        // $member = Member::where('country', 'Nepal')->where('designation', 'Typesetter')->get();
+        // dd($member);
+                // ->$member->address
+                // ->$member->country
+                // ->$member->company
+            //    ->take(10)
+
+
+            //    $member = Member::where('country', 'usa')->first();
+
+            //    $member = $member->fresh();
+            // $des = Destination::addSelect(['last_flight' => Flight::select('Airlines')
+            // ->whereColumn('destination_id','destinations.id')
+            // ->orderByDesc('arrived_at')
+            // ->limit(1)
+            // ])->get();
+            // $destinations = Destination::get();
+            //     foreach($destinations as $destination){
+            //         dump($destination);
+            //         dump($destination->flights()->orderByDesc('arrived_at')->select('Airlines')->take(1)->get());
+            //     }
+            //     die();
+
+
+            $des = Flight::where('id','destinations.id')->get();
+
+            dd($des);
+
+        // $des = Destination::with('flight')->first();
+        // return $des;
+
+
+        // return view('retrieving')->with('members', $member);
     }
 }

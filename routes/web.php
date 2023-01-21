@@ -2,8 +2,13 @@
 
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UserController;
+use App\Models\Comment;
+use App\Models\Like;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use app\Models\Phone;
+use App\Models\Post;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +22,30 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $post = Post::find(2)->likes;
+    dd($post);
+
+    // $likes = Post::with('likes')->get();
+    // // dd($likes);
+
+    return view('welcome', compact('users'));
 });
+
+Route::get('feed', function(){
+    $posts = Post::with(['likes','likes.user'])->paginate(10);
+    return view('feed', compact('posts'));
+})->name('feed');
+
+Route::get('likes', function()
+{
+
+    $posts = Post::with(['likes','likes.user'])->paginate(10);
+    // dd($posts);
+    return view('like', compact('posts'));
+})->name('likes');
+
+Route::get('comments', [Comment::class,'post'])->name('comment');
 // Route::controller(MemberController::class)->group(function(){
 //     route::get('members', 'index')->name('member.index');
 //     route::get('members/create', 'create')->name('member.create');
@@ -46,6 +73,9 @@ Route::get('/members/edit/{id}', [MemberController::class, 'edit'])->name('edit'
 Route::put('/members/update/{id}', [MemberController::class, 'update'])->name('update');
 Route::get('session/{id}',[UserController::class, 'show']);
 Route::view('dashboard', 'dashboard')->name('dashboard')->middleware('auth');
+route::get('test', [MemberController::class, 'retriving'])->name('test');
+
+
 
 
 require __DIR__.'/auth.php';
