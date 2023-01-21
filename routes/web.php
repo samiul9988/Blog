@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UserController;
 use App\Models\Comment;
@@ -44,6 +45,8 @@ Route::get('likes', function()
     // dd($posts);
     return view('like', compact('posts'));
 })->name('likes');
+
+Route::post('like', [LikeController::class,'store'])->name('like');
 
 Route::get('comments', [Comment::class,'post'])->name('comment');
 // Route::controller(MemberController::class)->group(function(){

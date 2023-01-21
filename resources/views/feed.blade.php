@@ -17,7 +17,12 @@
 
         <div class="card-body">
           <h5 class="card-title">{{ $post->title }}</h5>
-          <a href="" class="btn btn-primary">Like</a>({{ $post->likes->count() }})
+          <form action="{{ route('like') }}" method="post">
+            @csrf
+            <input type="hidden" value="{{ $post->id }}" name="post_id">
+            <input type="hidden" value="{{ $post->user->id }}" name="user_id">
+            <button class="btn btn-primary">Like</button>({{ $post->likes->count() }})
+          </form>
           @foreach ($post->likes as $like)
                 {{ $like->user->name }}
           @endforeach
