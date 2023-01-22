@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Comment;
+use App\Models\Like;
+use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,4 +60,40 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function posts()
+    {
+        $data['posts'] = Post::with(['likes','likes.user'])->paginate(10);
+        return view('card',$data);
+
+    }
+
+    public function store(Request $request)
+    {
+
+        $likes = new Like();
+
+        $likes->post_id = $request->post_id;
+        $likes->user_id = $request->user_id;
+        $likes->save();
+
+        return redirect()->back();
+
+    }
+
+    public function index(Request $request)
+    {
+        $comments = new Comment();
+
+        $comments->post_id = $request->post_id;
+        $comments->message = $request->message;
+
+        $comments->save();
+
+        return redirect()->back();
+
+
+    }
+
+    
 }

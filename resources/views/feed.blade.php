@@ -17,16 +17,43 @@
 
         <div class="card-body">
           <h5 class="card-title">{{ $post->title }}</h5>
+
+          {{-- like --}}
           <form action="{{ route('like') }}" method="post">
             @csrf
             <input type="hidden" value="{{ $post->id }}" name="post_id">
             <input type="hidden" value="{{ $post->user->id }}" name="user_id">
             <button class="btn btn-primary">Like</button>({{ $post->likes->count() }})
-          </form>
-          @foreach ($post->likes as $like)
+          </form><br>
+          {{-- @foreach ($post->likes as $like)
                 {{ $like->user->name }}
-          @endforeach
-          <a href="#" class="btn btn-info">Comments</a>
+          @endforeach --}}
+        <div class="d-flex justify-content-center">
+          <table>
+            <tr>
+              <th>{{ $post->user->name }}</th>
+            </tr>
+            @foreach ($post->user->comments as $comment)
+
+
+            <tr>
+              <td>{{ $comment->message }}</td>
+            </tr>
+            @endforeach
+          </table>
+        </div>
+
+          {{-- comments --}}
+          <form action="{{ route('comments') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                  <input type="hidden" value="{{ $post->user->id }}" name="user_id">
+                  <input type="hidden" value="{{ $post->id }}" name="post_id">
+                  <input type="text" class="form-control-box" name="message">
+
+                </div>
+                <button type="submit" class="btn btn-info" value="Comment">Comment</button>({{ $post->comments->count() }})
+            </form>
         </div>
         <div class="card-footer text-muted">
           2 days ago

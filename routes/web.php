@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Comment;
 use App\Models\Like;
@@ -22,15 +24,17 @@ use App\Models\User;
 |
 */
 
+Route::get('index',[LikeController::class,'index'])->name('index');
+
 Route::get('/', function () {
 
     $post = Post::find(2)->likes;
-    dd($post);
+    // dd($post);
 
     // $likes = Post::with('likes')->get();
     // // dd($likes);
 
-    return view('welcome', compact('users'));
+    return view('welcome');
 });
 
 Route::get('feed', function(){
@@ -38,17 +42,23 @@ Route::get('feed', function(){
     return view('feed', compact('posts'));
 })->name('feed');
 
-Route::get('likes', function()
-{
+Route::get('card',[ProfileController::class,'posts'])->name('card');
 
-    $posts = Post::with(['likes','likes.user'])->paginate(10);
-    // dd($posts);
-    return view('like', compact('posts'));
-})->name('likes');
+Route::post('storlike',[ProfileController::class,'store'])->name('storlike');
+Route::post('comment',[ProfileController::class,'index'])->name('comment');
+Route::get('edit_post/{id}',[PostController::class,'edit'])->name('edit_post');
+
+Route::PUT('update/{id}',[PostController::class,'update'])->name('post.update');
+
+
+
 
 Route::post('like', [LikeController::class,'store'])->name('like');
 
-Route::get('comments', [Comment::class,'post'])->name('comment');
+Route::post('comments', [LikeController::class,'save'])->name('comments');
+
+
+// Route::get('comments', [Comment::class,'post'])->name('comment');
 // Route::controller(MemberController::class)->group(function(){
 //     route::get('members', 'index')->name('member.index');
 //     route::get('members/create', 'create')->name('member.create');
