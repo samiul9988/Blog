@@ -9,17 +9,17 @@
   <body>
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('post.update',['id'=>$post->id]) }}" method="POST">
+            <form action="{{ route('post.update', $post->id) }}" method="POST">
                 @csrf
-                @method('PUT')
+                @method('POST')
                 <div class="mb-3">
                   <label value="" class="form-label">Title</label>
                   <input type="text" class="form-control" name="title" value="{{ $post->title }}">
+                  @error('title')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
-                <div class="mb-3">
-                    <label value="" class="form-label">Image</label>
-                    <input type="text" class="form-control" name="title" value="{{ $post->title }}">
-                  </div>
+
 
                 <button type="submit" class="btn btn-primary">Update</button>
               </form>

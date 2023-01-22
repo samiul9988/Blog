@@ -48,7 +48,7 @@ Route::post('storlike',[ProfileController::class,'store'])->name('storlike');
 Route::post('comment',[ProfileController::class,'index'])->name('comment');
 Route::get('edit_post/{id}',[PostController::class,'edit'])->name('edit_post');
 
-Route::PUT('update/{id}',[PostController::class,'update'])->name('post.update');
+Route::post('update/{id}',[PostController::class,'update'])->name('post.update');
 
 
 

@@ -71,17 +71,19 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $post = Post::find($id);
         $request->validate([
             'title' => 'required'
         ]);
 
-        $post->update([
-            'title' => $request->input('title')
-        ]);
+        $post->title =$request->title;
+        $post->save();
 
-        return redirect()->back();
+        return redirect()->route('card');
+
+
+
+
     }
 
     /**
